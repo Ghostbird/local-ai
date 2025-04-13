@@ -15,10 +15,8 @@ This repo has branches with different docker compose set-ups that I use to local
 2. Run `./set-up.sh`
 3. Run `docker compose up -d`
 
-# Ollama
+# Open Web UI
 
-This branch runs only Ollama. Run `docker exec -t ollama ollama run gemma3:1b` to start a very simple model and chat with it.
+This branch runs Ollama + Open Web UI in single-user mode. Run `docker exec -t ollama ollama load gemma3:1b` to load a very simple model.
 
-Run `nvtop` to monitor your GPU and evaluate whether the model is properly running on the GPU.
-
-Run `docker exec -t ollama ollama ps` to see how which models are running, how much memory they use, and how this is distributed across CPU and GPU.
+Browse to http://localhost:8080 to view the Open Web UI, configure it, and converse with the model.

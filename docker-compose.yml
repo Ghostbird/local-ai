@@ -27,5 +27,21 @@ services:
               capabilities: [gpu]
     networks:
       - ollama
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    pull_policy: always
+    ports:
+      - "8080:8080"
+    environment:
+      - WEBUI_AUTH=false
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./open-webui:/app/backend/data
+    restart: unless-stopped
+    networks:
+      - ollama
+
 networks:
   ollama: null
