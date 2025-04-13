@@ -1,1 +1,5 @@
 ollama/*
+perplexica/*
+searxng/*
+!perplexica/config.toml
+!searxng/settings.yml

@@ -15,10 +15,8 @@ This repo has branches with different docker compose set-ups that I use to local
 2. Run `./set-up.sh`
 3. Run `docker compose up -d`
 
-# Ollama
+# SearxNG + Perplexica
 
-This branch runs only Ollama. Run `docker exec -t ollama ollama run gemma3:1b` to start a very simple model and chat with it.
+This branch runs only Ollama + SearxNG + Perplexica. Run `docker exec -t ollama ollama run gemma3:1b` to load a very simple model.
 
-Run `nvtop` to monitor your GPU and evaluate whether the model is properly running on the GPU.
-
-Run `docker exec -t ollama ollama ps` to see how which models are running, how much memory they use, and how this is distributed across CPU and GPU.
+Browse to http://localhost:3000 to open Perplexica, configure it, and use it as AI search engine.

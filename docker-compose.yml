@@ -27,5 +27,33 @@ services:
               capabilities: [gpu]
     networks:
       - ollama
+  searxng:
+    image: docker.io/searxng/searxng:latest
+    container_name: searxng
+    pull_policy: always
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    ports:
+      - 8080
+    networks:
+      - ollama
+    restart: unless-stopped
+
+  perplexica:
+    image: itzcrazykns1337/perplexica:main
+    container_name: perplexica
+    pull_policy: always
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+    ports:
+      - 3000:3000
+    networks:
+      - ollama
+    volumes:
+      - ./perplexica/backend-dbstore:/home/perplexica/data
+      - ./perplexica/uploads:/home/perplexica/uploads
+      - ./perplexica/config.toml:/home/perplexica/config.toml
+    restart: unless-stopped
+
 networks:
   ollama: null
