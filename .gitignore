@@ -1,2 +1,5 @@
 ollama/*
 open-webui/*
+storage/*
+storage-models/*
+storage-user/*

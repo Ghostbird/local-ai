@@ -10,7 +10,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - 11434
+      - 11434:11434
     environment:
       - OLLAMA_FLASH_ATTENTION=1
     logging:
@@ -26,12 +26,13 @@ services:
               count: all
               capabilities: [gpu]
     networks:
-      - ollama
+      - internal
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
     pull_policy: always
+    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
@@ -39,9 +40,41 @@ services:
       - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
       - ./open-webui:/app/backend/data
-    restart: unless-stopped
     networks:
-      - ollama
+      - internal
+
+  comfyui:
+    image: yanwk/comfyui-boot:cu124-slim
+    container_name: comfyui
+    pull_policy: always
+    restart: unless-stopped
+    ports:
+      - 8188:8188
+    environment:
+      - CLI_ARGS=--lowvram
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+    volumes:
+      - ./storage:/root
+      - ./storage-models/models:/root/ComfyUI/models
+      - ./storage-models/hf-hub:/root/.cache/huggingface/hub
+      - ./storage-models/torch-hub:/root/.cache/torch/hub
+      - ./storage-user/input:/root/ComfyUI/input
+      - ./storage-user/output:/root/ComfyUI/output
+      - ./storage-user/workflows:/root/ComfyUI/user/default/workflows
+    networks:
+      - internal
 
 networks:
-  ollama: null
+  internal: null
