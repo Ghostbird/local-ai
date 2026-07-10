@@ -13,6 +13,9 @@ services:
       - 11434:11434
     environment:
       - OLLAMA_FLASH_ATTENTION=1
+      - OLLAMA_CONTEXT_LENGTH=16000 # 16kB context length
+      - OLLAMA_NUM_GPU=30 # Keep 30 transformer layers on GPU, let KV cache spill to RAM.
+      - OLLAMA_MAX_VRAM=10000000000 # 10GB reserve 2GB headroom
     logging:
       driver: json-file
       options:
@@ -29,7 +32,7 @@ services:
       - internal
 
   open-webui:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:cuda
     container_name: open-webui
     pull_policy: always
     restart: unless-stopped
@@ -42,9 +45,16 @@ services:
       - ./open-webui:/app/backend/data
     networks:
       - internal
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   comfyui:
-    image: yanwk/comfyui-boot:cu124-slim
+    image: yanwk/comfyui-boot:cu130-slim-v2
     container_name: comfyui
     pull_policy: always
     restart: unless-stopped

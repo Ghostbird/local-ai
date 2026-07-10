@@ -3,3 +3,6 @@ open-webui/*
 storage/*
 storage-models/*
 storage-user/*
+# For symlinks to other disk
+ollama
+storage-models
