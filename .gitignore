@@ -1,5 +1,7 @@
 ollama/*
 open-webui/*
+vane/*
+searxng/*
 storage/*
 storage-models/*
 storage-user/*
