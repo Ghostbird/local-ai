@@ -1,6 +1,6 @@
 # Docker compose local AI
 
-This repo has branches with different docker compose set-ups that I use to locally run AI and try things.
+This repo contains a docker compose + nginx reverse proxy set-up that I use to locally run AI.
 
 ## Requirements
 
@@ -15,8 +15,10 @@ This repo has branches with different docker compose set-ups that I use to local
 2. Run `./set-up.sh`
 3. Run `docker compose up -d`
 
-# Open Web UI
+# Results
 
-This branch runs Ollama + Open Web UI in single-user mode. Run `docker exec -t ollama ollama load gemma3:1b` to load a very simple model.
-
-Browse to http://localhost:8080 to view the Open Web UI, configure it, and converse with the model.
+- Ollama running on http://ollama.local
+- Open WebUI running on http://open-webui.local
+- ComfyUI running on http://comfyui.local
+- Vane running on http://vane.local
+- SearxNG running on http://searxng.local
